@@ -1,0 +1,10 @@
+
+
+.search-part{
+  height: 100vh;
+  transition: all 0.25s ease-in;
+}
+
+.on-top{
+  height:20vh;
+}

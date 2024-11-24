@@ -1,0 +1,8 @@
+.AppEpisodesList-component {
+  display: flex;
+}
+
+.poster{
+  width: 100%;
+  object-fit: cover;
+}
