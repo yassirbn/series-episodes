@@ -63,10 +63,10 @@ const AppMainContent = () => {
   };
 
   return (
-    <div className="AppMainContent-component ">
-      <div className={`container mx-auto px-4 `}>
+    <div className="AppMainContent-component">
+      <div className="container mx-auto px-4 ">
         <div
-          className={`flex items-center justify-center search-part with-animation ${
+          className={`md:flex pt-6 md:pt-0 items-center justify-center search-part with-animation ${
             !searchValue.length ? "" : "on-top"
           }`}
         >
@@ -102,9 +102,12 @@ const AppMainContent = () => {
               />
             </div>
           </div>
-          <div className="flex">
-            <AppCreateEpisodeModal btnText="Add new Episode"></AppCreateEpisodeModal>
-          </div>
+          {((searchValue.length > 0 && !searching && episodes.length === 0) ||
+            !searchValue.length) && (
+            <div className="text-center mt-6 md:m-0">
+              <AppCreateEpisodeModal btnText="Add new Episode"></AppCreateEpisodeModal>
+            </div>
+          )}
         </div>
 
         <>

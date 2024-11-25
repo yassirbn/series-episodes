@@ -48,7 +48,7 @@ const AppEpisodeDetails = () => {
   }, [id]);
 
   return (
-    <div className="AppEpisodeDetails-component">
+    <div className="AppEpisodeDetails-component w-screen">
       <>
         {episodeDeleted && (
           <div
@@ -63,8 +63,8 @@ const AppEpisodeDetails = () => {
       <>{!episode && <AppSpinner></AppSpinner>}</>
       <>
         {episode && (
-          <div className=" flex relative z-20 items-center overflow-hidden">
-            <div className="container mx-auto px-4 flex relative py-16">
+          <div className=" md:flex relative z-20 items-center overflow-hidden">
+            <div className="container mx-auto px-4 md:flex relative py-16">
               <div className="sm:w-2/3 lg:w-3/5 flex flex-col relative z-20 m-1">
                 <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-12"></span>
                 <h1 className="break-words font-bebas-neue uppercase text-3xl sm:text-3xl font-black flex flex-col leading-none dark:text-white text-gray-800">
@@ -87,7 +87,7 @@ const AppEpisodeDetails = () => {
                   imdbScore : {episode.imdbRating ?? "N/A"}
                 </span>
 
-                <div className="flex mt-12">
+                <div className="flex mt-12 items-center justify-center">
                   <button
                     className="uppercase py-2 px-4 rounded-lg bg-pink-500 border-2 border-transparent text-white text-md  hover:bg-pink-400"
                     onClick={deleteEpisode}
@@ -96,7 +96,7 @@ const AppEpisodeDetails = () => {
                   </button>
                 </div>
               </div>
-              <div className="flex sm:w-1/3 lg:w-2/5 relative items-center justify-center m-1">
+              <div className="flex sm:w-1/3 lg:w-2/5 relative items-center justify-center mt-6 md:m-1 overflow-hidden">
                 <img
                   src={
                     episode.poster ??

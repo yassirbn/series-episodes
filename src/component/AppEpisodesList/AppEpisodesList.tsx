@@ -8,7 +8,7 @@ const AppEpisodesList = ({ episodesList }: AppEpisodesListProps) => {
   const episodes = episodesList.map((episode, index) => (
     <Link to={`details/${episode.id}`} key={index}>
       <div className="flex flex-col justify-center  max-w-sm bg-white border border-gray-200 rounded-lg shadow bg-gray-700  border-gray-700 m-6 min-h-[280px]">
-        <div className="p-5 min-w-[383px]">
+        <div className="p-5 md:min-w-[383px]">
           <div>
             <span className="block mb-2 text-xl font-bold tracking-tight text-gray-400 ">
               {episode.title}
@@ -32,7 +32,7 @@ const AppEpisodesList = ({ episodesList }: AppEpisodesListProps) => {
   ));
   const noResultFound = (
     <div className="flex flex-col justify-center  max-w-sm bg-white border border-gray-200 rounded-lg shadow bg-gray-700  border-gray-700 m-6 min-h-[280px]">
-      <div className="flex items-center justify-center p-5 min-w-[383px]">
+      <div className="flex items-center justify-center p-5 md:min-w-[383px]">
         No result found
       </div>
     </div>
