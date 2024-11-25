@@ -64,7 +64,7 @@ const AppEpisodeDetails = () => {
       <>
         {episode && (
           <div className=" md:flex relative z-20 items-center overflow-hidden">
-            <div className="container mx-auto px-4 md:flex relative py-16">
+            <div className="container mx-auto px-4 md:flex relative py-16 md:px-16">
               <div className="sm:w-2/3 lg:w-3/5 flex flex-col relative z-20 m-1">
                 <span className="w-20 h-2 bg-gray-800 dark:bg-white mb-12"></span>
                 <h1 className="break-words font-bebas-neue uppercase text-3xl sm:text-3xl font-black flex flex-col leading-none dark:text-white text-gray-800">
