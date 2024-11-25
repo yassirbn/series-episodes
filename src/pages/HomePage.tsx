@@ -1,7 +1,7 @@
 import AppMainContent from "../component/AppMainContent";
 
-function HomePage() {
+const HomePage = () => {
   return <AppMainContent></AppMainContent>;
-}
+};
 
 export default HomePage;
