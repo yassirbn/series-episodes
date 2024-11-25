@@ -1,10 +1,10 @@
 import "./App.css";
-import AppMainContent from "./component/AppMainContent";
+import AppRouter from "./routes";
 
 function App() {
   return (
-    <div className="App">
-      <AppMainContent></AppMainContent>
+    <div className="App min-h-screen from-teal-100 via-teal-300 to-teal-500 bg-gradient-to-br">
+      <AppRouter></AppRouter>
     </div>
   );
 }

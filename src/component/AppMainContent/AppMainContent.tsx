@@ -4,7 +4,8 @@ import AppEpisodesList from "../AppEpisodesList";
 import { Episode } from "../../types/types";
 import { graphqlClient } from "../../graphql/graphqlClient";
 import { LIST_EPISODES } from "../../graphql/queries";
-import { fetchSeriesData } from "../../services/api";
+import AppSpinner from "../AppSpinner";
+import AppCreateEpisodeModal from "../AppCreateEpisodeModal";
 
 const AppMainContent = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
@@ -15,32 +16,9 @@ const AppMainContent = () => {
       const { listEpisodes } = await graphqlClient.request<{
         listEpisodes: Episode[];
       }>(LIST_EPISODES, { search: searchQuery });
-      const imdbIds = listEpisodes
-        .map((episode) => episode.imdbId)
-        .filter((e) => e);
-      const imdbResults = imdbIds.map(async (id) => await fetchSeriesData(id));
-
-      Promise.all(imdbResults).then((res) => {
-        const episodeListwithImage = listEpisodes.map((episode) => {
-          const imdbdata = res.find(
-            (element) => element.imdbID === episode.imdbId
-          );
-          console.log(res, episode, imdbdata);
-
-          return {
-            ...episode,
-            poster: imdbdata?.Poster,
-          };
-        });
-
-        setEpisodes(episodeListwithImage);
-      });
-
       setEpisodes(listEpisodes);
     } catch (error) {
       console.error("Error fetching episodes:", error);
-    } finally {
-      console.log(episodes);
     }
   };
   useEffect(() => {
@@ -52,10 +30,9 @@ const AppMainContent = () => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-    console.log(event.target.value);
   };
   return (
-    <div className="AppMainContent-component min-h-screen from-teal-100 via-teal-300 to-teal-500 bg-gradient-to-br">
+    <div className="AppMainContent-component ">
       <div className={`container mx-auto px-4 `}>
         <div
           className={`flex items-center justify-center search-part with-animation ${
@@ -72,11 +49,11 @@ const AppMainContent = () => {
                 className="mr-2 h-5 w-5 stroke-slate-400"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="2"
+                strokeWidth="2"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 ></path>
               </svg>
@@ -94,11 +71,23 @@ const AppMainContent = () => {
               />
             </div>
           </div>
+          <div className="flex">
+            <AppCreateEpisodeModal btnText="Add new Episode"></AppCreateEpisodeModal>
+          </div>
         </div>
 
-        <div className={` ${searchValue.length ? "" : "hidden"}`}>
-          <AppEpisodesList episodesList={episodes}></AppEpisodesList>
-        </div>
+        <>
+          {searchValue.length > 0 && episodes.length > 0 && (
+            <div className={` ${searchValue.length ? "" : "hidden"}`}>
+              <AppEpisodesList episodesList={episodes}></AppEpisodesList>
+            </div>
+          )}
+        </>
+        <>
+          {searchValue.length > 0 && episodes.length === 0 && (
+            <AppSpinner></AppSpinner>
+          )}
+        </>
       </div>
     </div>
   );

@@ -8,7 +8,17 @@ interface Episode {
   releaseDate: string;
   imdbId: string;
   poster?:string;
+  imdbRating?:string
 }
 
-
-export type {Episode}
+ interface EpisodeInput {
+  id: string;
+  series: string;
+  title: string;
+  description: string;
+  seasonNumber: number;
+  episodeNumber: number;
+  releaseDate: string; // Format: YYYY-MM-DD
+  imdbId: string;
+}
+export type {Episode,EpisodeInput}
