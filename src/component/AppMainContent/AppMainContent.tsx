@@ -108,8 +108,8 @@ const AppMainContent = () => {
         </div>
 
         <>
-          {searchValue.length > 0 && episodes.length > 0 && (
-            <div className={` ${searchValue.length ? "" : "hidden"}`}>
+          {searchValue.length > 0 && !searching && (
+            <div>
               <AppEpisodesList episodesList={episodes}></AppEpisodesList>
             </div>
           )}

@@ -1,4 +1,3 @@
-
 import { Episode } from "../../types/types";
 import "./AppEpisodesList.css";
 import { Link } from "react-router-dom";
@@ -31,9 +30,16 @@ const AppEpisodesList = ({ episodesList }: AppEpisodesListProps) => {
       </div>
     </Link>
   ));
+  const noResultFound = (
+    <div className="flex flex-col justify-center  max-w-sm bg-white border border-gray-200 rounded-lg shadow bg-gray-700  border-gray-700 m-6 min-h-[280px]">
+      <div className="flex items-center justify-center p-5 min-w-[383px]">
+        No result found
+      </div>
+    </div>
+  );
   return (
     <div className="flex items-center justify-center  flex-wrap">
-      {episodes}
+      {episodes.length > 0 ? episodes : noResultFound}
     </div>
   );
 };
