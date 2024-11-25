@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import { graphqlClient } from "../../graphql/graphqlClient";
 import { CREATE_EPISODE } from "../../graphql/mutations";
-import { EpisodeInput } from "../../types/types";
+import { useNavigate } from "react-router-dom";
 
 type AppCreateEpisodeModalProps = {
   btnText: string;
@@ -12,6 +12,7 @@ function AppCreateEpisodeModal({ btnText }: AppCreateEpisodeModalProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [series, setSeries] = useState("");
+  const navigate = useNavigate();
   const episodeTobeCreated = {
     id: useId(),
     series: "",
@@ -24,7 +25,7 @@ function AppCreateEpisodeModal({ btnText }: AppCreateEpisodeModalProps) {
   };
   const createEpisode = async () => {
     try {
-      const newEpisode = await graphqlClient.request(CREATE_EPISODE, {
+      await graphqlClient.request(CREATE_EPISODE, {
         episode: {
           ...episodeTobeCreated,
           title,
@@ -34,10 +35,10 @@ function AppCreateEpisodeModal({ btnText }: AppCreateEpisodeModalProps) {
       });
 
       setShowModal(false);
-
-      window.location.href = `/details/${episodeTobeCreated.id}`;
+      navigate(`/details/${episodeTobeCreated.id}`);
     } catch (error) {
       console.error("Failed to delete episode:", error);
+      setShowModal(false);
     }
   };
   return (

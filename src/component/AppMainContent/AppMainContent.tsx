@@ -23,31 +23,35 @@ const AppMainContent = () => {
         listEpisodes: Episode[];
       }>(LIST_EPISODES, { search: searchQuery });
       setEpisodes(listEpisodes);
-      setSearching(false);
     } catch (error) {
       console.error("Error fetching episodes:", error);
+    } finally {
       setSearching(false);
     }
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
   };
 
   // Handle new episode creation
   const { data: newEpisodeData } = useSubscription(ON_CREATE_EPISODE);
   useEffect(() => {
-    if (newEpisodeData) {
-      setEpisodes((prev) => [...prev, newEpisodeData.onCreateEpisode]);
+    if (!newEpisodeData) {
+      return;
     }
+    setEpisodes((prev) => [...prev, newEpisodeData.onCreateEpisode]);
   }, [newEpisodeData]);
 
   // Handle episode deletion
   const { data: deleteEpisodeData } = useSubscription(ON_DELETE_EPISODE);
   useEffect(() => {
-    if (deleteEpisodeData) {
-      setEpisodes((prev) =>
-        prev.filter(
-          (episode) => episode.id !== deleteEpisodeData.onDeleteEpisode
-        )
-      );
+    if (!deleteEpisodeData) {
+      return;
     }
+    setEpisodes((prev) =>
+      prev.filter((episode) => episode.id !== deleteEpisodeData.onDeleteEpisode)
+    );
   }, [deleteEpisodeData]);
 
   useEffect(() => {
@@ -57,10 +61,6 @@ const AppMainContent = () => {
     }, 300); // Debounce to avoid excessive API calls
     return () => clearTimeout(timeoutId);
   }, [searchValue]);
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
 
   return (
     <div className="AppMainContent-component w-screen">
