@@ -18,8 +18,6 @@ const AppEpisodeDetails = () => {
         getEpisodeById: Episode;
       }>(GET_EPISODE_BY_ID, { episodeId: id });
       const imdbResults = await fetchSeriesData(getEpisodeById.imdbId);
-      console.log(imdbResults);
-
       setEpisode({
         ...getEpisodeById,
         poster: imdbResults.Poster,

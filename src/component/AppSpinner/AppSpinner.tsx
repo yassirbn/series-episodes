@@ -1,6 +1,6 @@
 const AppSpinner = () => {
   return (
-    <div className="AppSpinner-component">
+    <div className="AppSpinner-component flex items-center justify-center">
       <div role="status">
         <svg
           aria-hidden="true"

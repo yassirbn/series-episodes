@@ -6,10 +6,16 @@ import { graphqlClient } from "../../graphql/graphqlClient";
 import { LIST_EPISODES } from "../../graphql/queries";
 import AppSpinner from "../AppSpinner";
 import AppCreateEpisodeModal from "../AppCreateEpisodeModal";
+import { useSubscription } from "@apollo/client";
+import {
+  ON_CREATE_EPISODE,
+  ON_DELETE_EPISODE,
+} from "../../graphql/subscriptions";
 
 const AppMainContent = () => {
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const [searching, setSearching] = useState(false);
 
   const fetchEpisodes = async (searchQuery: string) => {
     try {
@@ -17,12 +23,36 @@ const AppMainContent = () => {
         listEpisodes: Episode[];
       }>(LIST_EPISODES, { search: searchQuery });
       setEpisodes(listEpisodes);
+      setSearching(false);
     } catch (error) {
       console.error("Error fetching episodes:", error);
+      setSearching(false);
     }
   };
+
+  // Handle new episode creation
+  const { data: newEpisodeData } = useSubscription(ON_CREATE_EPISODE);
+  useEffect(() => {
+    if (newEpisodeData) {
+      setEpisodes((prev) => [...prev, newEpisodeData.onCreateEpisode]);
+    }
+  }, [newEpisodeData]);
+
+  // Handle episode deletion
+  const { data: deleteEpisodeData } = useSubscription(ON_DELETE_EPISODE);
+  useEffect(() => {
+    if (deleteEpisodeData) {
+      setEpisodes((prev) =>
+        prev.filter(
+          (episode) => episode.id !== deleteEpisodeData.onDeleteEpisode
+        )
+      );
+    }
+  }, [deleteEpisodeData]);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
+      setSearching(true);
       fetchEpisodes(searchValue);
     }, 300); // Debounce to avoid excessive API calls
     return () => clearTimeout(timeoutId);
@@ -31,6 +61,7 @@ const AppMainContent = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
+
   return (
     <div className="AppMainContent-component ">
       <div className={`container mx-auto px-4 `}>
@@ -83,11 +114,7 @@ const AppMainContent = () => {
             </div>
           )}
         </>
-        <>
-          {searchValue.length > 0 && episodes.length === 0 && (
-            <AppSpinner></AppSpinner>
-          )}
-        </>
+        <>{searching && <AppSpinner></AppSpinner>}</>
       </div>
     </div>
   );

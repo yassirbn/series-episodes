@@ -1,41 +1,21 @@
-import { GraphQLClient } from 'graphql-request';
 import { ApolloClient, ApolloLink, InMemoryCache, split, HttpLink } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-const API_URL = process.env.REACT_APP_GRAPHQL_API!;
-const API_KEY = process.env.REACT_APP_GRAPHQL_API_KEY!;
-const WEB_SOCKET_URI = process.env.REACT_APP_GRAPHQL_WEBSOCKET!;
-
-if (!API_URL || !API_KEY) {
-  throw new Error('GraphQL API URL or API Key is missing in environment variables.');
-}
-
-if(!WEB_SOCKET_URI){
-  throw new Error('WEB socket API URL is missing in environment variables.');
-}
-
-export const graphqlClient = new GraphQLClient(API_URL, {
-  headers: {
-    'x-api-key': API_KEY,
-  },
-});
-
-
 const httpLink = new HttpLink({
-  uri: API_URL,
+  uri: process.env.REACT_APP_GRAPHQL_API,
   headers: {
-    'x-api-key': API_KEY,
+    'x-api-key': process.env.REACT_APP_GRAPHQL_API_KEY || '',
   },
 });
 
 const wsLink = new WebSocketLink({
-  uri: WEB_SOCKET_URI,
+  uri: process.env.REACT_APP_GRAPHQL_WEBSOCKET || '',
   options: {
     reconnect: true,
     connectionParams: {
       headers: {
-        'x-api-key': API_KEY,
+        'x-api-key': process.env.REACT_APP_GRAPHQL_API_KEY || '',
       },
     },
   },
