@@ -13,18 +13,18 @@ function AppCreateEpisodeModal({ btnText }: AppCreateEpisodeModalProps) {
   const [description, setDescription] = useState("");
   const [series, setSeries] = useState("");
   const navigate = useNavigate();
+  const episodeTobeCreated = {
+    id: useId(),
+    series: "",
+    title: "",
+    description: "",
+    seasonNumber: 1,
+    episodeNumber: 1,
+    releaseDate: "",
+    imdbId: "",
+  };
 
   const createEpisode = async () => {
-    const episodeTobeCreated = {
-      id: useId(),
-      series: "",
-      title: "",
-      description: "",
-      seasonNumber: 1,
-      episodeNumber: 1,
-      releaseDate: "",
-      imdbId: "",
-    };
     try {
       await graphqlClient.request(CREATE_EPISODE, {
         episode: {
