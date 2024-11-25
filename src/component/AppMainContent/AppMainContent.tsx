@@ -63,19 +63,15 @@ const AppMainContent = () => {
   };
 
   return (
-    <div className="AppMainContent-component">
+    <div className="AppMainContent-component w-screen">
       <div className="container mx-auto px-4 ">
         <div
-          className={`md:flex pt-6 md:pt-0 items-center justify-center search-part with-animation ${
+          className={`md:flex pt-6 md:pt-0 items-center justify-center search-part with-animation  ${
             !searchValue.length ? "" : "on-top"
           }`}
         >
-          <div
-            className={`w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl search `}
-          >
-            <div
-              className={`flex items-center px-3.5 py-2 text-gray-400 group hover:ring-1 hover:ring-gray-300 focus-within:!ring-2 ring-inset focus-within:!ring-teal-500 rounded-md with-animation search `}
-            >
+          <div className="w-full max-w-lg mx-auto bg-white rounded-lg shadow-xl search sm:w-2/3 lg:w-3/5">
+            <div className="flex items-center px-3.5 py-2 text-gray-400 group hover:ring-1 hover:ring-gray-300 focus-within:!ring-2 ring-inset focus-within:!ring-teal-500 rounded-md with-animation search ">
               <svg
                 className="mr-2 h-5 w-5 stroke-slate-400"
                 fill="none"
@@ -104,7 +100,7 @@ const AppMainContent = () => {
           </div>
           {((searchValue.length > 0 && !searching && episodes.length === 0) ||
             !searchValue.length) && (
-            <div className="text-center mt-6 md:m-0">
+            <div className="text-center mt-6 md:m-0 sm:w-1/3 lg:w-2/5 ">
               <AppCreateEpisodeModal btnText="Add new Episode"></AppCreateEpisodeModal>
             </div>
           )}

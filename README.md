@@ -1,3 +1,7 @@
+# This project was created based on this wireframe
+
+https://www.canva.com/design/DAGXgRAPypg/H1ha4jwyYsn7dsnlmJ8oXQ/edit
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
